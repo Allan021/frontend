@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0c040"/>
+      <stop offset="50%" style="stop-color:#d4a017"/>
+      <stop offset="100%" style="stop-color:#b8860b"/>
+    </linearGradient>
+    <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0c040"/>
+      <stop offset="100%" style="stop-color:#b8860b"/>
+    </linearGradient>
+    <linearGradient id="poleRed" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e74c3c"/>
+      <stop offset="100%" style="stop-color:#c0392b"/>
+    </linearGradient>
+    <linearGradient id="poleBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3498db"/>
+      <stop offset="100%" style="stop-color:#2980b9"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="200" cy="200" r="190" fill="#0a0a0a" stroke="url(#goldGrad)" stroke-width="4"/>
+  <circle cx="200" cy="200" r="180" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity="0.3"/>
+
+  <!-- Barber pole left -->
+  <g transform="translate(55, 100)">
+    <rect x="0" y="0" width="16" height="200" rx="8" fill="#ddd"/>
+    <rect x="2" y="10" width="12" height="180" rx="6" fill="white"/>
+    <rect x="2" y="10" width="12" height="25" rx="2" fill="url(#poleRed)"/>
+    <rect x="2" y="45" width="12" height="25" rx="2" fill="url(#poleBlue)"/>
+    <rect x="2" y="80" width="12" height="25" rx="2" fill="url(#poleRed)"/>
+    <rect x="2" y="115" width="12" height="25" rx="2" fill="url(#poleBlue)"/>
+    <rect x="2" y="150" width="12" height="25" rx="2" fill="url(#poleRed)"/>
+    <!-- Caps -->
+    <ellipse cx="8" cy="5" rx="10" ry="6" fill="url(#goldGrad)"/>
+    <ellipse cx="8" cy="195" rx="10" ry="6" fill="url(#goldGrad)"/>
+  </g>
+
+  <!-- Barber pole right -->
+  <g transform="translate(329, 100)">
+    <rect x="0" y="0" width="16" height="200" rx="8" fill="#ddd"/>
+    <rect x="2" y="10" width="12" height="180" rx="6" fill="white"/>
+    <rect x="2" y="10" width="12" height="25" rx="2" fill="url(#poleBlue)"/>
+    <rect x="2" y="45" width="12" height="25" rx="2" fill="url(#poleRed)"/>
+    <rect x="2" y="80" width="12" height="25" rx="2" fill="url(#poleBlue)"/>
+    <rect x="2" y="115" width="12" height="25" rx="2" fill="url(#poleRed)"/>
+    <rect x="2" y="150" width="12" height="25" rx="2" fill="url(#poleBlue)"/>
+    <ellipse cx="8" cy="5" rx="10" ry="6" fill="url(#goldGrad)"/>
+    <ellipse cx="8" cy="195" rx="10" ry="6" fill="url(#goldGrad)"/>
+  </g>
+
+  <!-- Scissors -->
+  <g transform="translate(200, 320) scale(0.9)" filter="url(#glow)">
+    <!-- Left blade -->
+    <path d="M-8,0 L-50,-30 Q-58,-35 -55,-25 L-12,5 Z" fill="url(#goldGrad)" opacity="0.9"/>
+    <circle cx="-55" cy="-28" r="10" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
+    <!-- Right blade -->
+    <path d="M8,0 L50,-30 Q58,-35 55,-25 L12,5 Z" fill="url(#goldGrad)" opacity="0.9"/>
+    <circle cx="55" cy="-28" r="10" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
+    <!-- Pivot -->
+    <circle cx="0" cy="2" r="5" fill="url(#goldGrad)"/>
+  </g>
+
+  <!-- "THE" text -->
+  <text x="200" y="140" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-weight="900" font-size="32" fill="white" letter-spacing="12" filter="url(#shadow)">THE</text>
+
+  <!-- "Ricky" text - script style -->
+  <text x="200" y="210" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-style="italic" font-size="72" fill="url(#goldGrad)" filter="url(#glow)">Ricky</text>
+
+  <!-- "ESTUDIO" text -->
+  <text x="200" y="250" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="300" font-size="28" fill="white" letter-spacing="8" opacity="0.9">ESTUDIO</text>
+
+  <!-- VIP Badge -->
+  <g transform="translate(200, 285)">
+    <!-- Shield shape -->
+    <path d="M-40,-12 L40,-12 L40,8 L0,22 L-40,8 Z" fill="url(#goldGrad)" filter="url(#shadow)"/>
+    <path d="M-36,-9 L36,-9 L36,6 L0,18 L-36,6 Z" fill="#0a0a0a"/>
+    <text x="0" y="8" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-weight="900" font-size="20" fill="url(#goldGrad)" letter-spacing="6">VIP</text>
+  </g>
+
+  <!-- Decorative stars -->
+  <g fill="url(#goldGrad)" opacity="0.6">
+    <polygon points="100,110 103,118 112,118 105,124 107,132 100,127 93,132 95,124 88,118 97,118" />
+    <polygon points="300,110 303,118 312,118 305,124 307,132 300,127 293,132 295,124 288,118 297,118" />
+  </g>
+
+  <!-- Subtle inner ring decoration -->
+  <circle cx="200" cy="200" r="170" fill="none" stroke="url(#goldGrad)" stroke-width="0.5" stroke-dasharray="8,8" opacity="0.25"/>
+</svg>

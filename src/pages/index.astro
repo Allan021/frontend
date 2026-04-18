@@ -1,0 +1,283 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BookingFormWrapper from '../components/landing/BookingFormWrapper';
+import BarberAnimations from '../components/landing/BarberAnimations';
+import Navbar from '../components/landing/Navbar';
+import ServicesGrid from '../components/landing/ServicesGrid';
+import { Image } from 'astro:assets';
+import bannerImg from '../assets/banner.jpg';
+import mobileImg from '../assets/mobile.jpg';
+---
+
+<Layout title="The Ricky Estudio VIP | Barbería Premium">
+
+  <BarberAnimations client:idle />
+  <Navbar client:only="react" />
+
+  <!-- Barber Pole Top Line -->
+  <div class="barber-pole-line fixed top-0 left-0 right-0 z-[60]"></div>
+
+  <!-- ═══════════════════════════════════
+       HERO SECTION
+       ═══════════════════════════════════ -->
+  <section id="home" class="hero-section relative min-h-[95vh] flex items-end overflow-hidden">
+    <!-- Ambient gold glow -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
+      <div class="absolute top-[10%] left-[5%] w-[400px] h-[400px] bg-gold/5 rounded-full blur-[180px]"></div>
+    </div>
+
+    <!-- ── DESKTOP HERO: Full bleed banner ── -->
+    <div class="hidden md:block absolute inset-0">
+      <Image
+        src={bannerImg}
+        alt="The Ricky Estudio VIP"
+        class="w-full h-full object-cover object-center scale-[1.02]"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <!-- Lighter gradients: image is the star, text just needs contrast -->
+      <div class="absolute inset-0 bg-gradient-to-t from-dark/95 via-dark/30 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-dark/70 via-transparent to-transparent"></div>
+    </div>
+
+    <!-- ── MOBILE HERO: Full bleed mobile image ── -->
+    <div class="md:hidden absolute inset-0">
+      <img
+        src="/mobile.jfif"
+        alt="Barbería Ricky"
+        class="w-full h-full object-cover object-top"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <!-- Lighter gradient so the image shows more -->
+      <div class="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/25 to-black/20"></div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="relative z-20 w-full max-w-7xl mx-auto px-4 pb-16 md:pb-20 pt-28">
+
+      <!-- DESKTOP content: Floating Dock at bottom -->
+      <div class="hidden md:flex absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex-row items-center gap-3 p-4 rounded-[2rem] bg-[#050505]/70 backdrop-blur-2xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8)] hero-banner-container" style="opacity:0;">
+          <a href="#booking" class="btn-gold-shimmer px-8 py-3.5 text-sm rounded-xl font-black uppercase tracking-widest shadow-barber-gold flex items-center gap-2.5">
+            <span>RESERVAR CITA</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          
+          <a href="https://wa.me/message/2HQX47DZKZU6M1" target="_blank" class="px-6 py-3.5 text-sm rounded-xl font-black uppercase tracking-widest text-white shadow-[0_0_15px_rgba(34,197,94,0.3)] hover:scale-[1.03] transition-all flex items-center gap-2" style="background-color: #25D366; color: white;">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            <span>WhatsApp</span>
+          </a>
+          
+          <div class="w-px h-8 bg-white/10 mx-2"></div>
+          
+          <a href="https://www.instagram.com/ricky_barber_2?igsh=ZnVmb2pwaDU4d25j" target="_blank" class="p-3 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] text-white hover:scale-110 transition-transform shadow-[0_0_15px_rgba(225,48,108,0.3)]">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/share/1EAE69eXTq/" target="_blank" class="p-3 rounded-xl text-white hover:scale-110 transition-transform shadow-[0_0_15px_rgba(24,119,242,0.3)]" style="background-color: #1877F2; color: white;">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+      </div>
+
+      <!-- MOBILE content: Floating Dock at bottom -->
+      <div class="md:hidden absolute bottom-6 left-4 right-4 z-30 mobile-hero">
+        <div class="mobile-hero-text p-4 rounded-[1.5rem] bg-[#050505]/85 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
+          <div class="flex flex-col gap-2.5" style="opacity:0;" id="mobile-buttons">
+            <a href="#booking" class="btn-gold-shimmer flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-black shadow-barber-gold uppercase tracking-widest text-[11px] w-full">
+              RESERVAR CITA
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            
+            <div class="grid grid-cols-[1fr_auto_auto] gap-2.5">
+              <a href="https://wa.me/message/2HQX47DZKZU6M1" class="flex items-center justify-center gap-1.5 px-3 py-3 rounded-xl text-white font-black uppercase tracking-widest text-[9px] shadow-[0_0_15px_rgba(34,197,94,0.3)] hover:scale-[1.02] transition-transform" style="background-color: #25D366; color: white;">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                WhatsApp
+              </a>
+              <a href="https://www.instagram.com/ricky_barber_2?igsh=ZnVmb2pwaDU4d25j" class="flex items-center justify-center px-4 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] text-white">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              </a>
+              <a href="https://www.facebook.com/share/1EAE69eXTq/" class="flex items-center justify-center px-4 rounded-xl text-white" style="background-color: #1877F2; color: white;">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex-col items-center gap-2 opacity-40 animate-bounce">
+      <span class="text-[9px] text-gray-500 font-black uppercase tracking-widest">Scroll</span>
+      <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       HORARIO DE ATENCIÓN
+       ═══════════════════════════════════ -->
+  <section id="horarios" class="reveal-section py-20 px-4 relative overflow-hidden" data-reveal="scale">
+    <div class="absolute -bottom-20 -left-20 w-[500px] h-[500px] bg-orange-600/8 rounded-full blur-[150px] animate-pulse pointer-events-none"></div>
+    <div class="absolute -top-20 -right-20 w-[400px] h-[400px] bg-red-600/8 rounded-full blur-[120px] animate-pulse pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-gold text-xs font-black uppercase tracking-[0.4em] mb-3">✦ Está esperándote ✦</p>
+        <h2 class="text-4xl sm:text-5xl font-black text-white italic tracking-tight text-shadow-deep">
+          HORARIO DE <span class="text-gradient-gold">ATENCIÓN</span>
+        </h2>
+        <div class="w-32 h-1 bg-gradient-to-r from-transparent via-gold to-transparent rounded-full mx-auto mt-4"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Lunes-Sáb -->
+        <div class="reveal-item md:col-span-2 glass-card-gold rounded-3xl p-8 shadow-barber border border-gold/10 relative overflow-hidden" style="opacity:0;">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="flex items-start gap-4 mb-5">
+            <span class="text-4xl">💈</span>
+            <div>
+              <p class="text-xs text-gold font-black uppercase tracking-[0.3em] mb-1">Lunes a Martes</p>
+              <p class="text-xs text-gold font-black uppercase tracking-[0.3em]">Jueves, Viernes y Sábado</p>
+            </div>
+          </div>
+          <p class="text-4xl sm:text-5xl font-black text-white italic tracking-tight">9:00 AM</p>
+          <p class="text-2xl sm:text-3xl font-black text-gold/60 italic">— 7:00 PM</p>
+        </div>
+
+        <!-- Cerrado + Domingo stack -->
+        <div class="flex flex-col gap-4">
+          <div class="reveal-item glass-card-gold rounded-3xl p-6 shadow-barber border border-red-600/15 bg-red-600/5 relative overflow-hidden" style="opacity:0;">
+            <p class="text-xs text-red-500 font-black uppercase tracking-[0.3em] mb-2">🚫 Miércoles</p>
+            <p class="text-2xl font-black text-white/30 uppercase line-through decoration-red-600">CERRADO</p>
+          </div>
+          <div class="reveal-item glass-card-gold rounded-3xl p-6 shadow-barber border border-gold/10 flex-1" style="opacity:0;">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-2xl">⏰</span>
+              <p class="text-xs text-gold font-black uppercase tracking-[0.3em]">Domingo</p>
+            </div>
+            <p class="text-2xl font-black text-white italic">8:00 AM</p>
+            <p class="text-lg font-black text-gold/60 italic">— 3:00 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom tagline -->
+      <div class="text-center mt-10">
+        <p class="text-gray-600 italic font-bold">"Tu estilo, tu flow, tu identidad"</p>
+        <a href="#booking" class="inline-flex items-center gap-2 mt-4 px-8 py-3 border border-gold/30 text-gold font-black text-sm rounded-xl hover:bg-gold/10 transition-all uppercase tracking-widest">
+          Agendar Ahora →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="barber-pole-line"></div>
+
+  <!-- ═══════════════════════════════════
+       SERVICES
+       ═══════════════════════════════════ -->
+  <section id="servicios" class="reveal-section py-20 px-4 relative" data-reveal="up">
+    <div class="relative z-10 max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-gold text-xs font-black uppercase tracking-[0.4em] mb-3">✂️ Lo que ofrecemos</p>
+        <h2 class="section-heading text-4xl sm:text-5xl font-black text-white italic tracking-tight text-shadow-deep">
+          NUESTROS <span class="text-gradient-gold">SERVICIOS</span>
+        </h2>
+        <div class="w-32 h-1 bg-gradient-to-r from-transparent via-gold to-transparent rounded-full mx-auto mt-4"></div>
+      </div>
+      <div id="services-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <ServicesGrid client:visible />
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       WHY US
+       ═══════════════════════════════════ -->
+  <section class="reveal-section py-20 px-4 relative overflow-hidden" data-reveal="left">
+    <div class="relative z-10 max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="flex justify-center order-2 md:order-1">
+          <div class="gallery-image relative group" style="opacity:0;">
+            <div class="absolute -inset-8 bg-gold/10 rounded-full blur-3xl group-hover:bg-gold/15 transition-all duration-700"></div>
+            <Image
+              src={mobileImg}
+              alt="Corte de cabello"
+              class="w-full max-w-[280px] rounded-3xl shadow-banner-epic relative z-10 group-hover:scale-105 transition-transform duration-700"
+              loading="lazy"
+            />
+            <!-- Floating badge -->
+            <div class="absolute -bottom-4 -right-4 z-20 bg-gold text-black px-4 py-2 rounded-2xl shadow-barber-gold">
+              <p class="font-black text-xs uppercase tracking-widest">100% Premium</p>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-5 order-1 md:order-2">
+          <p class="text-gold text-xs font-black uppercase tracking-[0.4em]">✦ ¿Por qué elegirnos?</p>
+          <h2 class="text-3xl sm:text-4xl font-black text-white italic leading-tight">
+            UNA EXPERIENCIA<br/><span class="text-gradient-gold">ÚNICA</span>
+          </h2>
+          {[
+            { emoji: '⚡', title: 'SERVICIO VIP', desc: 'Atención personalizada en cada detalle.' },
+            { emoji: '🎩', title: 'BARBERO ÚNICO', desc: 'Un solo artesano, calidad garantizada.' },
+            { emoji: '✂️', title: 'FADES Y DISEÑOS', desc: 'Cortes, Barba, Estrellas y más.' },
+            { emoji: '📍', title: 'EL PROGRESO, YORO', desc: 'Ven a visitarnos. CEL: 8795-2631.' },
+          ].map(({ emoji, title, desc }) => (
+            <div class="info-card glass-card-gold rounded-2xl p-5 shadow-barber flex items-center gap-4 hover:border-gold/20 transition-all duration-300 group" style="opacity:0;">
+              <span class="text-2xl shrink-0 group-hover:scale-110 transition-transform">{emoji}</span>
+              <div>
+                <h3 class="text-white font-black text-sm mb-0.5 uppercase tracking-tighter">{title}</h3>
+                <p class="text-gray-500 text-xs font-bold">{desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="barber-pole-line"></div>
+
+  <!-- ═══════════════════════════════════
+       BOOKING
+       ═══════════════════════════════════ -->
+  <section id="booking" class="reveal-section py-20 px-4" data-reveal="up">
+    <div class="max-w-xl mx-auto">
+      <div class="text-center mb-10">
+        <p class="text-gold text-xs font-black uppercase tracking-[0.4em] mb-3">✦ Sin filas, sin esperas ✦</p>
+        <h2 class="section-heading text-4xl sm:text-5xl font-black text-white italic tracking-tight text-shadow-deep">
+          AGENDA TU <span class="text-gradient-gold">CITA</span>
+        </h2>
+        <div class="w-32 h-1 bg-gradient-to-r from-transparent via-gold to-transparent rounded-full mx-auto mt-4"></div>
+      </div>
+      <div class="reveal-item glass-card-gold rounded-3xl p-6 sm:p-8 shadow-barber-lg bg-dark/80 backdrop-blur-2xl">
+        <BookingFormWrapper client:only="react" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 border-t border-dark-border/20">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <img src="/logo.svg" alt="Logo" class="w-8 h-8" />
+        <div>
+          <div class="font-black text-sm"><span class="text-white">THE </span><span class="text-gold">RICKY</span></div>
+          <p class="text-[9px] text-gray-600 font-bold uppercase tracking-widest">Estudio VIP</p>
+        </div>
+      </div>
+      <p class="text-gray-700 text-[10px] font-black tracking-[0.3em] uppercase">&copy; 2026 · El Progreso, Honduras</p>
+      <div class="flex items-center gap-4">
+        <a href="https://wa.me/message/2HQX47DZKZU6M1" target="_blank" class="text-gray-600 hover:text-green-400 transition text-sm font-black">📲 WhatsApp</a>
+        <span class="text-dark-border">|</span>
+        <a href="#booking" class="text-gray-600 hover:text-gold transition text-sm font-black">Agendar</a>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</Layout>

@@ -1,0 +1,31 @@
+---
+import '../../styles/global.css';
+import PanelApp from '../../components/panel/PanelApp';
+
+export function getStaticPaths() {
+  return [
+    { params: { app: undefined } },
+    { params: { app: 'appointments' } },
+    { params: { app: 'register' } },
+    { params: { app: 'services' } },
+    { params: { app: 'settings' } },
+  ];
+}
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <title>Panel Admin — The Ricky Estudio VIP</title>
+  </head>
+  <body>
+    <div id="panel-root">
+      <PanelApp client:only="react" />
+    </div>
+  </body>
+</html>

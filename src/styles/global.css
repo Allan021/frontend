@@ -1,0 +1,484 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gold: #d4a017;
+  --color-gold-light: #f0c040;
+  --color-gold-dark: #b8860b;
+  --color-dark: #070707;
+  --color-dark-card: #0e0e0e;
+  --color-dark-surface: #131313;
+  --color-dark-border: #1e1e1e;
+  --color-accent-pink: #e91e8c;
+  --color-accent-blue: #00bcd4;
+  --color-accent-orange: #ff6b35;
+  --color-accent-purple: #8b5cf6;
+  --color-barber-red: #c0392b;
+  --color-barber-blue: #2980b9;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Outfit', system-ui, sans-serif;
+    background-color: var(--color-dark);
+    color: white;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb { background: var(--color-gold-dark); border-radius: 10px; }
+  ::selection { background: var(--color-gold); color: #000; }
+}
+
+/* ═══════════════════════════════════════
+   KEYFRAME ANIMATIONS
+   ═══════════════════════════════════════ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(60px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.7) rotate(-3deg); }
+  to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-80px) rotate(-2deg); }
+  to { opacity: 1; transform: translateX(0) rotate(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(80px) rotate(2deg); }
+  to { opacity: 1; transform: translateX(0) rotate(0); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes pulseGold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212,160,23,0.5); }
+  50% { box-shadow: 0 0 0 20px rgba(212,160,23,0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes barberPole {
+  0% { background-position: 0 0; }
+  100% { background-position: 60px 0; }
+}
+@keyframes glowPulse {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(212,160,23,0.3)); }
+  50% { filter: drop-shadow(0 0 25px rgba(212,160,23,0.7)); }
+}
+@keyframes razorSlash {
+  0% { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0% 0 0); }
+}
+@keyframes scissorOpen {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(15deg); }
+}
+@keyframes scissorClose {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-15deg); }
+}
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+@keyframes bannerReveal {
+  0% { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+  100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+}
+@keyframes textGlitch {
+  0%, 100% { text-shadow: 0 0 10px rgba(212,160,23,0.5); }
+  25% { text-shadow: 2px 0 10px rgba(233,30,140,0.5), -2px 0 10px rgba(0,188,212,0.5); }
+  50% { text-shadow: 0 0 20px rgba(212,160,23,0.8); }
+  75% { text-shadow: -2px 0 10px rgba(233,30,140,0.5), 2px 0 10px rgba(0,188,212,0.5); }
+}
+@keyframes neonFlicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 10px var(--color-gold), 0 0 20px var(--color-gold), 0 0 40px var(--color-gold); }
+  20%, 24%, 55% { opacity: 0.8; text-shadow: none; }
+}
+@keyframes borderChase {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+@keyframes hairDrift {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+@keyframes bannerFloat {
+  0%, 100% { transform: perspective(1000px) rotateX(0deg) translateY(0); }
+  50% { transform: perspective(1000px) rotateX(1deg) translateY(-8px); }
+}
+
+/* ═══════════════════════════════════════
+   BARBER-THEMED SHADOWS
+   ═══════════════════════════════════════ */
+.shadow-barber {
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.6),
+    0 0 40px rgba(212,160,23,0.08),
+    inset 0 1px 0 rgba(212,160,23,0.1);
+}
+.shadow-barber-lg {
+  box-shadow:
+    0 8px 40px rgba(0,0,0,0.7),
+    0 0 60px rgba(212,160,23,0.1),
+    0 0 120px rgba(212,160,23,0.05),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.shadow-barber-gold {
+  box-shadow:
+    0 4px 30px rgba(212,160,23,0.2),
+    0 0 60px rgba(212,160,23,0.1),
+    0 20px 60px rgba(0,0,0,0.5);
+}
+.shadow-barber-neon {
+  box-shadow:
+    0 0 5px rgba(212,160,23,0.4),
+    0 0 15px rgba(212,160,23,0.2),
+    0 0 30px rgba(212,160,23,0.1),
+    0 0 60px rgba(212,160,23,0.05);
+}
+.shadow-banner-epic {
+  box-shadow:
+    0 25px 80px -10px rgba(0,0,0,0.8),
+    0 0 0 1px rgba(212,160,23,0.15),
+    0 0 60px rgba(212,160,23,0.08),
+    0 0 120px rgba(212,160,23,0.04);
+}
+
+/* Text shadows for barber vibes */
+.text-shadow-barber {
+  text-shadow:
+    0 2px 10px rgba(212,160,23,0.3),
+    0 4px 20px rgba(0,0,0,0.5);
+}
+.text-shadow-neon {
+  text-shadow:
+    0 0 10px rgba(212,160,23,0.5),
+    0 0 20px rgba(212,160,23,0.3),
+    0 0 40px rgba(212,160,23,0.2);
+}
+.text-shadow-deep {
+  text-shadow:
+    0 1px 0 #b8860b,
+    0 2px 0 #9a7209,
+    0 3px 0 #7c5c07,
+    0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* ═══════════════════════════════════════
+   GLASS & CARD EFFECTS
+   ═══════════════════════════════════════ */
+.glass-card {
+  background: rgba(14,14,14,0.85);
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid rgba(212,160,23,0.08);
+}
+.glass-card-gold {
+  background: linear-gradient(135deg, rgba(14,14,14,0.9), rgba(20,16,8,0.9));
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(212,160,23,0.15);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.5),
+    0 0 0 1px rgba(212,160,23,0.05),
+    inset 0 1px 0 rgba(212,160,23,0.1);
+}
+
+/* ═══════════════════════════════════════
+   ANIMATED BARBER POLE LINE
+   ═══════════════════════════════════════ */
+.barber-pole-line {
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    #c0392b 0px, #c0392b 15px,
+    #fff 15px, #fff 30px,
+    #2980b9 30px, #2980b9 45px,
+    #fff 45px, #fff 60px
+  );
+  background-size: 60px 4px;
+  animation: barberPole 1.2s linear infinite;
+}
+.barber-pole-vertical {
+  width: 4px;
+  background: repeating-linear-gradient(
+    0deg,
+    #c0392b 0px, #c0392b 15px,
+    #fff 15px, #fff 30px,
+    #2980b9 30px, #2980b9 45px,
+    #fff 45px, #fff 60px
+  );
+  background-size: 4px 60px;
+  animation: barberPole 1.2s linear infinite;
+}
+
+/* ═══════════════════════════════════════
+   GOLD GRADIENT TEXT
+   ═══════════════════════════════════════ */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #f0c040 0%, #d4a017 40%, #b8860b 70%, #f0c040 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════ */
+.btn-gold-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #d4a017, #f0c040, #d4a017);
+  color: #000;
+  font-weight: 800;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 20px rgba(212,160,23,0.3);
+}
+.btn-gold-shimmer::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: rotate(45deg);
+  animation: shimmer 3s ease-in-out infinite;
+}
+.btn-gold-shimmer:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 40px rgba(212,160,23,0.5), 0 0 20px rgba(212,160,23,0.2);
+}
+.btn-gold-shimmer:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ═══════════════════════════════════════
+   SERVICE CARDS — BARBER THEMED
+   ═══════════════════════════════════════ */
+.service-card {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-barber-red), #fff, var(--color-barber-blue));
+  transform: scaleX(0);
+  transition: transform 0.5s ease;
+  transform-origin: left;
+}
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(212,160,23,0.06) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.service-card:hover::before {
+  transform: scaleX(1);
+}
+.service-card:hover::after {
+  opacity: 1;
+}
+.service-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.6),
+    0 0 30px rgba(212,160,23,0.15),
+    0 0 0 1px rgba(212,160,23,0.2);
+}
+
+/* ═══════════════════════════════════════
+   SOCIAL ICONS
+   ═══════════════════════════════════════ */
+.social-icon {
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.social-icon:hover {
+  transform: translateY(-6px) scale(1.15) rotate(-3deg);
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.4),
+    0 0 20px rgba(212,160,23,0.2);
+}
+
+/* ═══════════════════════════════════════
+   SECTION REVEALS (Intersection Observer)
+   ═══════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: none;
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════
+   BORDER CHASE ANIMATION
+   ═══════════════════════════════════════ */
+.border-chase {
+  position: relative;
+}
+.border-chase::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent, var(--color-barber-red), transparent, var(--color-barber-blue), transparent);
+  background-size: 200% 100%;
+  animation: borderChase 4s linear infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.border-chase:hover::before {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════
+   SEPARATOR
+   ═══════════════════════════════════════ */
+.section-separator {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold-light), var(--color-gold-dark));
+  margin: 0 auto;
+  border-radius: 2px;
+  position: relative;
+}
+.section-separator::before,
+.section-separator::after {
+  content: '✂';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gold);
+  font-size: 14px;
+  opacity: 0.5;
+}
+.section-separator::before { left: -24px; transform: translateY(-50%) scaleX(-1); }
+.section-separator::after { right: -24px; }
+
+/* ═══════════════════════════════════════
+   MOBILE BANNER GLOW
+   ═══════════════════════════════════════ */
+.mobile-banner-glow {
+  position: relative;
+}
+.mobile-banner-glow::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  background: conic-gradient(from 0deg, #d4a017, #c0392b, #2980b9, #ff6b35, #e91e8c, #d4a017);
+  border-radius: 1.5rem;
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(16px);
+  animation: borderChase 3s linear infinite;
+}
+
+/* ═══════════════════════════════════════
+   FLOATING PARTICLES (hair clippings)
+   ═══════════════════════════════════════ */
+.hair-particle {
+  position: fixed;
+  width: 2px;
+  height: 8px;
+  background: var(--color-gold);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+  animation: hairDrift 8s linear infinite;
+}
+
+/* ═══════════════════════════════════════
+   NAVBAR GLASS
+   ═══════════════════════════════════════ */
+.navbar-glass {
+  background: rgba(7,7,7,0.8);
+  backdrop-filter: blur(30px) saturate(1.8);
+  -webkit-backdrop-filter: blur(30px) saturate(1.8);
+  border-bottom: 1px solid rgba(212,160,23,0.08);
+  transition: all 0.3s ease;
+}
+.navbar-glass.scrolled {
+  background: rgba(7,7,7,0.95);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5), 0 0 20px rgba(212,160,23,0.05);
+}
+
+/* ═══════════════════════════════════════
+   HERO BANNER
+   ═══════════════════════════════════════ */
+.hero-banner-container {
+  animation: bannerFloat 6s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════
+   SCROLL INDICATOR
+   ═══════════════════════════════════════ */
+.scroll-indicator {
+  animation: float 2.5s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════
+   RAZOR LINE REVEAL
+   ═══════════════════════════════════════ */
+.razor-reveal {
+  animation: razorSlash 0.8s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════
+   FLOATING WHATSAPP
+   ═══════════════════════════════════════ */
+.whatsapp-float {
+  animation: pulseGold 2s infinite;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.whatsapp-float:hover {
+  transform: scale(1.15) rotate(-10deg);
+  box-shadow: 0 0 30px rgba(37,211,102,0.5);
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE OVERRIDES
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+  .shadow-barber-lg {
+    box-shadow:
+      0 6px 30px rgba(0,0,0,0.6),
+      0 0 40px rgba(212,160,23,0.08);
+  }
+  .shadow-banner-epic {
+    box-shadow:
+      0 15px 50px rgba(0,0,0,0.7),
+      0 0 40px rgba(212,160,23,0.1);
+  }
+}
