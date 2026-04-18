@@ -6,8 +6,9 @@ import { es } from 'date-fns/locale';
 import 'react-day-picker/dist/style.css';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { fetchDashboardStats, queryKeys } from '../../lib/api';
-import { CalendarIcon, ChevronDown } from 'lucide-react';
+import { CalendarIcon, ChevronDown, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import * as XLSX from 'xlsx';
 
 export default function Dashboard() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
@@ -46,18 +47,59 @@ export default function Dashboard() {
 
   const goalProgress = stats.dailyGoal > 0 ? Math.min((stats.today.earnings / stats.dailyGoal) * 100, 100) : 0;
 
+  const exportDashboard = () => {
+    const wb = XLSX.utils.book_new();
+    // Sheet 1: Today
+    const todayData = [
+      { Métrica: 'Cortes Hoy', Valor: stats.today.cuts },
+      { Métrica: 'Ganancias', Valor: `L. ${stats.today.earnings.toFixed(0)}` },
+      { Métrica: 'Propinas', Valor: `L. ${stats.today.tips.toFixed(0)}` },
+      { Métrica: 'Citas Pendientes', Valor: stats.pendingAppointments },
+      { Métrica: 'Meta Diaria', Valor: `L. ${stats.dailyGoal.toFixed(0)}` },
+      { Métrica: 'Progreso', Valor: `${goalProgress.toFixed(0)}%` },
+    ];
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(todayData), 'Resumen Hoy');
+    // Sheet 2: 7-day chart
+    const chartSheet = stats.chartData.map(d => ({
+      Fecha: d.date,
+      Cortes: d.cuts,
+      Ganancias: d.earnings,
+      Propinas: d.tips,
+    }));
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(chartSheet), 'Últimos 7 Días');
+    // Sheet 3: Range (if available)
+    if (searchRange.from && searchRange.to) {
+      const rangeData = [
+        { Métrica: 'Cortes', Valor: stats.range.cuts },
+        { Métrica: 'Ganancias', Valor: `L. ${stats.range.earnings.toFixed(0)}` },
+        { Métrica: 'Propinas', Valor: `L. ${stats.range.tips.toFixed(0)}` },
+        { Métrica: 'Desde', Valor: searchRange.from },
+        { Métrica: 'Hasta', Valor: searchRange.to },
+      ];
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rangeData), 'Por Rango');
+    }
+    XLSX.writeFile(wb, `Dashboard_Ricky_${format(new Date(), 'yyyy-MM-dd')}.xlsx`);
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
           <h1 className="text-2xl font-black text-white tracking-tight">Dashboard</h1>
           <p className="text-gray-500 text-sm font-bold mt-0.5">
             {new Date().toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase()}
           </p>
         </div>
-        <div className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gold/10 border border-gold/20 rounded-xl">
-          <span className="text-gold text-sm font-black">💈 THE RICKY</span>
+        <div className="flex items-center gap-2 shrink-0">
+          <button onClick={exportDashboard}
+            className="flex items-center gap-2 px-4 py-2.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-xl hover:bg-emerald-500/20 transition text-xs font-black uppercase tracking-wider">
+            <Download className="w-4 h-4" />
+            <span className="hidden sm:inline">Excel</span>
+          </button>
+          <div className="hidden sm:flex items-center gap-2 px-4 py-2.5 bg-gold/10 border border-gold/20 rounded-xl">
+            <span className="text-gold text-sm font-black">💈 THE RICKY</span>
+          </div>
         </div>
       </div>
 

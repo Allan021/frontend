@@ -26,69 +26,19 @@ adminApi.interceptors.request.use((config) => {
   return config;
 });
 
-// Refresh token interceptor
-let isRefreshing = false;
-let failedQueue: Array<{ resolve: (token: string) => void; reject: (err: any) => void }> = [];
-
-const processQueue = (error: any, token: string | null = null) => {
-  failedQueue.forEach(prom => {
-    if (error) prom.reject(error);
-    else prom.resolve(token as string);
-  });
-  failedQueue = [];
-};
-
+// On 401 → force logout (5-day JWT, no refresh needed)
 adminApi.interceptors.response.use(
   (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry && originalRequest.url !== '/auth/login') {
-      if (isRefreshing) {
-        return new Promise(function(resolve, reject) {
-          failedQueue.push({ resolve, reject });
-        }).then(token => {
-          if (originalRequest.headers && typeof originalRequest.headers.set === 'function') {
-            originalRequest.headers.set('Authorization', 'Bearer ' + token);
-          } else {
-            originalRequest.headers['Authorization'] = 'Bearer ' + token;
-          }
-          return adminApi(originalRequest);
-        }).catch(err => {
-          return Promise.reject(err);
-        });
-      }
-
-      originalRequest._retry = true;
-      isRefreshing = true;
-
-      const refreshToken = localStorage.getItem('ricky_refresh_token');
-      if (!refreshToken) {
-        isRefreshing = false;
-        if (typeof window !== 'undefined') window.dispatchEvent(new Event('auth:logout'));
-        return Promise.reject(error);
-      }
-
-      try {
-        const { data } = await axios.post(`${API_URL}/api/auth/refresh`, { refreshToken });
-        localStorage.setItem('ricky_token', data.token);
-        localStorage.setItem('ricky_refresh_token', data.refreshToken);
-        
-        adminApi.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
-        if (originalRequest.headers && typeof originalRequest.headers.set === 'function') {
-          originalRequest.headers.set('Authorization', 'Bearer ' + data.token);
-        } else {
-          originalRequest.headers['Authorization'] = 'Bearer ' + data.token;
-        }
-        
-        processQueue(null, data.token);
-        return adminApi(originalRequest);
-      } catch (err) {
-        processQueue(err, null);
-        if (typeof window !== 'undefined') window.dispatchEvent(new Event('auth:logout'));
-        return Promise.reject(err);
-      } finally {
-        isRefreshing = false;
-      }
+  (error) => {
+    if (
+      error.response?.status === 401 &&
+      error.config?.url !== '/auth/login' &&
+      error.config?.url !== '/auth/me'
+    ) {
+      // Token expired or invalid → clean up and force re-login
+      localStorage.removeItem('ricky_token');
+      localStorage.removeItem('ricky_refresh_token');
+      if (typeof window !== 'undefined') window.dispatchEvent(new Event('auth:logout'));
     }
     return Promise.reject(error);
   }

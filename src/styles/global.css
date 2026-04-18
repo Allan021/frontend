@@ -25,12 +25,24 @@
     background-color: var(--color-dark);
     color: white;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeSpeed;
   }
 
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: #000; }
   ::-webkit-scrollbar-thumb { background: var(--color-gold-dark); border-radius: 10px; }
   ::selection { background: var(--color-gold); color: #000; }
+
+  /* Accessibility: respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 /* ═══════════════════════════════════════
@@ -212,6 +224,8 @@
   );
   background-size: 60px 4px;
   animation: barberPole 1.2s linear infinite;
+  will-change: background-position;
+  contain: strict;
 }
 .barber-pole-vertical {
   width: 4px;
@@ -224,6 +238,17 @@
   );
   background-size: 4px 60px;
   animation: barberPole 1.2s linear infinite;
+}
+
+/* Pause costly infinite animations on mobile */
+@media (max-width: 768px) {
+  .barber-pole-line,
+  .barber-pole-vertical {
+    animation: none;
+  }
+  .hero-banner-container {
+    animation: none;
+  }
 }
 
 /* ═══════════════════════════════════════
@@ -312,6 +337,11 @@
     0 20px 60px rgba(0,0,0,0.6),
     0 0 30px rgba(212,160,23,0.15),
     0 0 0 1px rgba(212,160,23,0.2);
+}
+@media (max-width: 768px) {
+  .service-card:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
 }
 
 /* ═══════════════════════════════════════
@@ -481,4 +511,26 @@
       0 15px 50px rgba(0,0,0,0.7),
       0 0 40px rgba(212,160,23,0.1);
   }
+}
+
+/* ═══════════════════════════════════════
+   ACCESSIBILITY
+   ═══════════════════════════════════════ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ═══════════════════════════════════════
+   PANEL ANIMATION
+   ═══════════════════════════════════════ */
+.animate-fade-in {
+  animation: fadeInUp 0.5s ease forwards;
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useAuth, API } from './PanelApp';
+import { adminApi, publicApi } from '../../lib/api';
 
 interface Service {
   id: string;
@@ -17,7 +17,6 @@ interface Appointment {
 }
 
 export default function RegisterService() {
-  const { token } = useAuth();
   const [services, setServices] = useState<Service[]>([]);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [form, setForm] = useState({
@@ -31,12 +30,14 @@ export default function RegisterService() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    fetch(`${API}/api/services`, { headers: { Authorization: `Bearer ${token}` } })
-      .then(r => r.json()).then(setServices).catch(() => {});
+    publicApi.get('/services')
+      .then(res => setServices(res.data))
+      .catch(() => {});
 
     const today = new Date().toISOString().split('T')[0];
-    fetch(`${API}/api/appointments?date=${today}&status=confirmed`, { headers: { Authorization: `Bearer ${token}` } })
-      .then(r => r.json()).then(data => setAppointments(Array.isArray(data) ? data : [])).catch(() => {});
+    adminApi.get(`/appointments?date=${today}&status=confirmed`)
+      .then(res => setAppointments(Array.isArray(res.data) ? res.data : []))
+      .catch(() => {});
   }, [success]);
 
   const selectedService = services.find(s => s.id === form.service_id);
@@ -47,18 +48,13 @@ export default function RegisterService() {
     setSuccess(false);
 
     try {
-      const res = await fetch(`${API}/api/completed`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({
-          appointment_id: form.appointment_id || null,
-          service_id: form.service_id,
-          tip_amount: parseFloat(form.tip_amount) || 0,
-          payment_method: form.payment_method,
-          notes: form.notes,
-        }),
+      await adminApi.post('/completed', {
+        appointment_id: form.appointment_id || null,
+        service_id: form.service_id,
+        tip_amount: parseFloat(form.tip_amount) || 0,
+        payment_method: form.payment_method,
+        notes: form.notes,
       });
-      if (!res.ok) throw new Error();
       setSuccess(true);
       setForm({ appointment_id: '', service_id: '', tip_amount: '', payment_method: 'cash', notes: '' });
     } catch {

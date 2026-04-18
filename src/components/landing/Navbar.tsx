@@ -126,6 +126,13 @@ function NavbarCore() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check if user has a valid token in localStorage
+  useEffect(() => {
+    const token = localStorage.getItem('ricky_token');
+    setIsLoggedIn(!!token && token !== 'null' && token !== 'undefined');
+  }, []);
 
   const { data: settings } = useQuery({
     queryKey: queryKeys.publicSettings,
@@ -222,12 +229,20 @@ function NavbarCore() {
               </div>
             )}
 
-            {/* Admin button */}
-            <button onClick={() => setLoginOpen(true)}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl text-white/60 hover:text-white hover:bg-white/8 transition-all text-[11px] font-black uppercase tracking-wider border border-transparent hover:border-white/10">
-              <LogIn className="w-3.5 h-3.5" />
-              <span className="hidden lg:inline">Admin</span>
-            </button>
+            {/* Admin / Panel button */}
+            {isLoggedIn ? (
+              <a href="/panel"
+                className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl text-gold/80 hover:text-gold hover:bg-gold/10 transition-all text-[11px] font-black uppercase tracking-wider border border-gold/20 hover:border-gold/40">
+                <LayoutDashboard className="w-3.5 h-3.5" />
+                <span className="hidden lg:inline">Panel</span>
+              </a>
+            ) : (
+              <button onClick={() => setLoginOpen(true)}
+                className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl text-white/60 hover:text-white hover:bg-white/8 transition-all text-[11px] font-black uppercase tracking-wider border border-transparent hover:border-white/10">
+                <LogIn className="w-3.5 h-3.5" />
+                <span className="hidden lg:inline">Admin</span>
+              </button>
+            )}
 
             {/* CTA */}
             <a href="#booking" className="btn-gold-shimmer px-4 sm:px-5 py-2.5 text-[11px] rounded-xl font-black uppercase tracking-widest flex items-center gap-1.5 shadow-barber-gold">
@@ -237,6 +252,8 @@ function NavbarCore() {
 
             {/* Mobile hamburger */}
             <button onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-expanded={mobileOpen}
               className="md:hidden flex flex-col gap-[5px] p-2.5 rounded-xl hover:bg-white/8 transition-all">
               <motion.span animate={{ rotate: mobileOpen ? 45 : 0, y: mobileOpen ? 8 : 0 }} className="w-6 h-0.5 bg-white block transition-all origin-center" />
               <motion.span animate={{ opacity: mobileOpen ? 0 : 1 }} className="w-6 h-0.5 bg-white block" />
@@ -252,6 +269,7 @@ function NavbarCore() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
+              role="menu"
               className="overflow-hidden md:hidden border-t border-dark-border/30 bg-dark/95 backdrop-blur-xl"
             >
               <div className="px-4 py-4 space-y-1">
@@ -279,11 +297,19 @@ function NavbarCore() {
                       <span>{settings.is_open ? 'Estamos ABIERTOS ✓' : 'Estamos CERRADOS ✗'}</span>
                     </div>
                   )}
-                  <button onClick={() => { setMobileOpen(false); setLoginOpen(true); }}
-                    className="flex items-center gap-2 px-4 py-3.5 rounded-2xl text-sm font-black text-gray-500 hover:text-white hover:bg-white/5 transition-all uppercase tracking-widest">
-                    <LogIn className="w-4 h-4" />
-                    <span>Acceso Admin</span>
-                  </button>
+                  {isLoggedIn ? (
+                    <a href="/panel" onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-2 px-4 py-3.5 rounded-2xl text-sm font-black text-gold hover:bg-gold/10 transition-all uppercase tracking-widest border border-gold/20">
+                      <LayoutDashboard className="w-4 h-4" />
+                      <span>Ir al Panel</span>
+                    </a>
+                  ) : (
+                    <button onClick={() => { setMobileOpen(false); setLoginOpen(true); }}
+                      className="flex items-center gap-2 px-4 py-3.5 rounded-2xl text-sm font-black text-gray-500 hover:text-white hover:bg-white/5 transition-all uppercase tracking-widest">
+                      <LogIn className="w-4 h-4" />
+                      <span>Acceso Admin</span>
+                    </button>
+                  )}
                 </div>
               </div>
             </motion.div>

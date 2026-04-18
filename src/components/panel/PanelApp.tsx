@@ -148,7 +148,7 @@ function Sidebar({ isMobileOpen, closeMobile }: { isMobileOpen: boolean; closeMo
 
       {/* Footer - Not pushed to the very bottom anymore */}
       <div className="p-3 space-y-1 mt-2">
-        <button onClick={() => navigate('/')} className="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-500 hover:text-white hover:bg-dark-surface transition text-sm font-bold w-full">
+        <button onClick={() => window.location.href = '/'} className="flex items-center gap-3 px-3 py-3 rounded-xl text-gray-500 hover:text-white hover:bg-dark-surface transition text-sm font-bold w-full">
           <span className="text-base shrink-0">🌐</span>
           {!collapsed && <span>Ver Sitio</span>}
         </button>

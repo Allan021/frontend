@@ -18,16 +18,33 @@ export default function BarberAnimations() {
     if (initialized.current) return;
     initialized.current = true;
 
-    // Wait for DOM to be ready
+    const isMobile = window.innerWidth < 768;
+
+    // Use requestIdleCallback where available for non-critical animations
+    const schedule = (fn: () => void) => {
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(fn, { timeout: 2000 });
+      } else {
+        setTimeout(fn, 200);
+      }
+    };
+
+    // Critical: hero + scroll reveals (observers are lightweight)
     requestAnimationFrame(() => {
       setTimeout(() => {
         initHeroAnimations();
-        initScrollReveals();
         initNavbarScroll();
+        initScrollReveals();
+      }, 50);
+    });
+
+    // Non-critical & heavy: defer on all devices, skip some on mobile
+    schedule(() => {
+      if (!isMobile) {
         initParticles();
         initServiceCards();
         initParallaxDepth();
-      }, 100);
+      }
     });
   }, []);
 

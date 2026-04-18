@@ -22,16 +22,20 @@ const { title } = Astro.props;
     
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     
-    <!-- Preconnect & Font Optimization -->
+    <!-- Font: Preload critical weight, load rest async -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap&font-display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;900&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" /></noscript>
     
     <title>{title}</title>
 
     <style is:global>
-      /* Prevent CLS on fonts */
-      body { font-family: 'Outfit', sans-serif; }
+      /* Fallback font-stack while Outfit loads */
+      body { font-family: 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+      /* Reduce CLS: reserve space for known layout elements */
+      .hero-section { min-height: 95vh; contain: layout; }
     </style>
   </head>
   <body class="bg-dark text-white selection:bg-gold selection:text-black">
